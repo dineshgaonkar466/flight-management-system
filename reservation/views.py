@@ -85,3 +85,19 @@ def confirm_booking(request, booking_id):
     booking = get_object_or_404(Booking, pk=booking_id, user=request.user)
     return render(request, 'confirm_booking.html', {'booking': booking})
 
+def dashboard(request):
+
+    flights = Flight.objects.all()
+
+    total_flights = flights.count()
+
+    total_available_seats = sum(
+        flight.available_seats for flight in flights
+    )
+
+    return render(request, 'dashboard.html', {
+        'flights': flights,
+        'total_flights': total_flights,
+        'total_available_seats': total_available_seats
+    })
+

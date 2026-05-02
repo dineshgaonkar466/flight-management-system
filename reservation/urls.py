@@ -7,6 +7,9 @@ urlpatterns = [
     path('book/<int:flight_id>/', views.book_flight, name='book_flight'),
     path('bookings/', views.my_bookings, name='my_bookings'),
 
+    # Dashboard
+    path('dashboard/', views.dashboard, name='dashboard'),
+
     # User Auth
     path('register/', views.register, name='register'),
     path('login/', views.login_view, name='login'),

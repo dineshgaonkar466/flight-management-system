@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1 class="mb-5 fw-bold text-center">
+        ✈ Flight Dashboard
+    </h1>
+
+    <!-- Statistics Cards -->
+
+    <div class="row mb-5">
+
+        <div class="col-md-6 mb-4">
+
+            <div class="card bg-dark text-white shadow-lg border-0 p-4">
+
+                <h3>Total Flights</h3>
+
+                <h1 class="display-4 fw-bold text-info">
+                    {{ total_flights }}
+                </h1>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6 mb-4">
+
+            <div class="card bg-dark text-white shadow-lg border-0 p-4">
+
+                <h3>Total Available Seats</h3>
+
+                <h1 class="display-4 fw-bold text-success">
+                    {{ total_available_seats }}
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Flights Table -->
+
+    <div class="card shadow-lg border-0">
+
+        <div class="card-body">
+
+            <h3 class="mb-4 text-dark">
+                Available Flights
+            </h3>
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+                            <th>Flight</th>
+                            <th>Origin</th>
+                            <th>Destination</th>
+                            <th>Seats</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for flight in flights %}
+
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    {{ flight.flight_number }}
+                                </strong>
+                            </td>
+
+                            <td>
+                                {{ flight.origin }}
+                            </td>
+
+                            <td>
+                                {{ flight.destination }}
+                            </td>
+
+                            <td>
+                                {{ flight.available_seats }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
