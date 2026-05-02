@@ -1,13 +1,95 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h2>My Bookings</h2>
-<ul class="list-group">
-    {% for booking in bookings %}
-    <li class="list-group-item">
-        {{ booking.flight.flight_number }} | {{ booking.flight.origin }} → {{ booking.flight.destination }} | Seats: {{ booking.seats_booked }}
-    </li>
-    {% empty %}
-    <li class="list-group-item">You have no bookings.</li>
-    {% endfor %}
-</ul>
+
+<div class="container">
+
+    <h1 class="text-center mb-5 fw-bold">
+        ✈ My Bookings
+    </h1>
+
+    <div class="row">
+
+        {% for booking in bookings %}
+
+        <div class="col-md-6 mb-4">
+
+            <div class="card shadow-lg border-0 text-dark h-100">
+
+                <div class="card-body">
+
+                    <h3 class="text-primary fw-bold">
+                        {{ booking.flight.flight_number }}
+                    </h3>
+
+                    <hr>
+
+                    <p>
+
+                        <strong>Route:</strong>
+
+                        {{ booking.flight.origin }}
+                        →
+                        {{ booking.flight.destination }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Departure:</strong>
+
+                        {{ booking.flight.departure_time|date:"M d, Y H:i" }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Arrival:</strong>
+
+                        {{ booking.flight.arrival_time|date:"M d, Y H:i" }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Seats Booked:</strong>
+
+                        {{ booking.seats_booked }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Passenger:</strong>
+
+                        {{ booking.user.username }}
+
+                    </p>
+
+                    <div class="alert alert-success mt-3">
+
+                        ✅ Booking Confirmed
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="text-center">
+
+            <h4>No bookings found.</h4>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
 {% endblock %}

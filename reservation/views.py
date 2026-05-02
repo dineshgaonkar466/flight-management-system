@@ -7,8 +7,22 @@ from .models import Flight, Booking
 from .forms import UserRegistrationForm
 
 def home(request):
+
     flights = Flight.objects.all()
-    return render(request, 'home.html', {'flights': flights})
+
+    source = request.GET.get('source')
+
+    destination = request.GET.get('destination')
+
+    if source:
+        flights = flights.filter(origin__icontains=source)
+
+    if destination:
+        flights = flights.filter(destination__icontains=destination)
+
+    return render(request, 'home.html', {
+        'flights': flights
+    })
 
 def flight_detail(request, flight_id):
     flight = get_object_or_404(Flight, pk=flight_id)
