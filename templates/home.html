@@ -2,9 +2,23 @@
 
 {% block content %}
 
-<div class="text-center mb-5">
-    <h1 class="display-4 fw-bold">Flight Management System</h1>
-    <p class="lead">Book flights easily and manage your travel smoothly ✈️</p>
+<div class="hero-section text-center mb-5">
+
+    <h1 class="display-3 fw-bold">
+        Explore The World ✈️
+    </h1>
+
+    <p class="lead mt-3">
+        Experience seamless flight booking at your fingertips
+    </p>
+
+    <a href="#flights"
+       class="btn btn-primary btn-lg mt-3">
+
+        Book Now
+
+    </a>
+
 </div>
 <div class="card p-4 shadow-lg border-0 mb-5"
      style="
@@ -51,6 +65,7 @@
     </form>
 
 </div>
+<div id="flights"></div>
 
 <div class="row">
 
@@ -91,7 +106,12 @@
                     <br><br>
 
                     <strong>Available Seats:</strong>
-                    {{ flight.available_seats }}
+                      {{ flight.available_seats }}
+
+                        <br><br>
+
+                        <strong>Price:</strong>
+                        ₹{{ flight.price }}
 
                 </p>
 

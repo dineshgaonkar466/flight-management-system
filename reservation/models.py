@@ -9,6 +9,7 @@ class Flight(models.Model):
     arrival_time = models.DateTimeField()
     total_seats = models.PositiveIntegerField()
     available_seats = models.PositiveIntegerField(blank=True, null=True)
+    price = models.IntegerField(default=5000)
 
     def save(self, *args, **kwargs):
         # Only set available_seats on creation (not on every update)

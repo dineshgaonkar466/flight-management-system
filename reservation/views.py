@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Flight, Booking
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, FlightForm
 
 def home(request):
 
@@ -57,9 +57,20 @@ def book_flight(request, flight_id):
 
 @login_required
 def my_bookings(request):
-    bookings = Booking.objects.filter(user=request.user).order_by('-booking_time')
-    return render(request, 'my_bookings.html', {'bookings': bookings})
 
+    bookings = Booking.objects.filter(
+        user=request.user
+    ).order_by('-booking_time')
+
+    for booking in bookings:
+        booking.total_price = (
+            booking.seats_booked *
+            booking.flight.price
+        )
+
+    return render(request, 'my_bookings.html', {
+        'bookings': bookings
+    })
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
@@ -114,4 +125,3 @@ def dashboard(request):
         'total_flights': total_flights,
         'total_available_seats': total_available_seats
     })
-
