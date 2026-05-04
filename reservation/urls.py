@@ -9,7 +9,13 @@ urlpatterns = [
 
     # Dashboard
     path('dashboard/', views.dashboard, name='dashboard'),
-    
+
+    # Seat selection
+   path(
+    'seat-selection/',
+    views.seat_selection,
+    name='seat_selection'
+),
 
     # User Auth
     path('register/', views.register, name='register'),

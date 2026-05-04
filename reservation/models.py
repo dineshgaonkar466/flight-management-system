@@ -24,6 +24,7 @@ class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
     seats_booked = models.PositiveIntegerField(default=1)  # ✅ Add this field
+    seat_number = models.CharField(max_length=10)
     booking_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

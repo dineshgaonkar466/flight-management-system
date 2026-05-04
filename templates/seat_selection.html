@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Seat Selection</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            text-align:center;
+        }
+
+        .seat-container{
+            display:grid;
+            grid-template-columns: repeat(3, 80px);
+            gap:15px;
+            justify-content:center;
+            margin-top:40px;
+        }
+
+        .seat{
+            width:80px;
+            height:80px;
+            background:#007bff;
+            color:white;
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+            font-size:18px;
+        }
+
+        .seat:hover{
+            background:green;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<h1>Select Your Seat</h1>
+
+<div class="seat-container">
+
+    {% for seat in seats %}
+
+        <button class="seat">
+
+            {{ seat }}
+
+        </button>
+
+    {% endfor %}
+
+</div>
+
+</body>
+</html>

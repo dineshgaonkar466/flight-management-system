@@ -125,3 +125,21 @@ def dashboard(request):
         'total_flights': total_flights,
         'total_available_seats': total_available_seats
     })
+
+def seat_selection(request):
+
+    seats = []
+
+    rows = ['A', 'B', 'C']
+
+    for row in rows:
+
+        for num in range(1, 4):
+
+            seats.append(f"{row}{num}")
+
+    return render(
+        request,
+        "seat_selection.html",
+        {"seats": seats}
+    )
