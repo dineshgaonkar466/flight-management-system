@@ -1,61 +1,128 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html' %}
 
-<head>
+{% block content %}
 
-    <title>Seat Selection</title>
+<h2 class="text-center mt-4 mb-3">Select Your Seat ✈️</h2>
 
-    <style>
+<p class="text-center">
+    Selected Seats: <span id="count">0</span>
+</p>
 
-        body{
-            font-family: Arial;
-            text-align:center;
-        }
+<form method="POST">
+    {% csrf_token %}
 
-        .seat-container{
-            display:grid;
-            grid-template-columns: repeat(3, 80px);
-            gap:15px;
-            justify-content:center;
-            margin-top:40px;
-        }
+    <div class="seat-layout">
 
-        .seat{
-            width:80px;
-            height:80px;
-            background:#007bff;
-            color:white;
-            border:none;
-            border-radius:10px;
-            cursor:pointer;
-            font-size:18px;
-        }
+        {% for seat in seats %}
 
-        .seat:hover{
-            background:green;
-        }
+            {% if forloop.counter0|divisibleby:4 %}
+                <div class="aisle"></div>
+            {% endif %}
 
-    </style>
+            <label>
 
-</head>
+                <input type="checkbox"
+                       name="seats"
+                       value="{{ seat.id }}"
+                       {% if seat.is_booked %}disabled{% endif %}
+                       onclick="updateCount()">
 
-<body>
+                <div class="seat
+                    {% if seat.is_booked %}
+                        booked
+                    {% else %}
+                        available
+                    {% endif %}">
 
-<h1>Select Your Seat</h1>
+                    {{ seat.seat_number }}
 
-<div class="seat-container">
+                </div>
 
-    {% for seat in seats %}
+            </label>
 
-        <button class="seat">
+        {% endfor %}
 
-            {{ seat }}
+    </div>
 
+    <div class="text-center mt-4">
+        <button class="btn btn-success px-5">
+            Confirm Booking
         </button>
+    </div>
 
-    {% endfor %}
+</form>
 
-</div>
+<style>
+/* Layout */
+.seat-layout{
+    display:grid;
+    grid-template-columns: repeat(5, 70px);
+    gap:15px;
+    justify-content:center;
+    margin-top:40px;
+}
 
-</body>
-</html>
+/* Aisle gap */
+.aisle{
+    width:30px;
+}
+
+/* Seat base */
+.seat{
+    width:70px;
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:12px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+
+    /* ✨ premium glass effect */
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* 🔵 Available (Premium Blue Gradient) */
+.available{
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color:white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Hover effect */
+.available:hover{
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #43e97b, #38f9d7);
+}
+
+/* ⚫ Booked (Dark Premium) */
+.booked{
+    background: linear-gradient(135deg, #434343, #000000);
+    color:#aaa;
+    cursor:not-allowed;
+}
+
+/* 🟡 Selected (Gold Glow) */
+input:checked + .seat{
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    color:black;
+    transform: scale(1.15);
+    box-shadow: 0 0 15px rgba(255, 200, 0, 0.8);
+}
+
+/* Hide checkbox */
+input{
+    display:none;
+}
+</style>
+
+<script>
+function updateCount(){
+    let count = document.querySelectorAll('input:checked').length;
+    document.getElementById('count').innerText = count;
+}
+</script>
+
+{% endblock %}

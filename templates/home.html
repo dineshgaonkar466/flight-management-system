@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
-<div class="hero-section text-center mb-5">
+<!-- HERO SECTION -->
+
+<div class="hero-section text-center">
 
     <h1 class="display-3 fw-bold">
         Explore The World ✈️
@@ -13,19 +16,15 @@
     </p>
 
     <a href="#flights"
-       class="btn btn-primary btn-lg mt-3">
-
+       class="btn btn-warning btn-lg mt-3 fw-bold">
         Book Now
-
     </a>
 
 </div>
-<div class="card p-4 shadow-lg border-0 mb-5"
-     style="
-     background: rgba(255,255,255,0.1);
-     backdrop-filter: blur(10px);
-     border-radius: 20px;
-     ">
+
+<!-- SEARCH BOX -->
+
+<div class="search-box container">
 
     <form method="GET">
 
@@ -35,6 +34,7 @@
 
                 <input type="text"
                        name="source"
+                       value="{{ request.GET.source }}"
                        class="form-control"
                        placeholder="From">
 
@@ -44,6 +44,7 @@
 
                 <input type="text"
                        name="destination"
+                       value="{{ request.GET.destination }}"
                        class="form-control"
                        placeholder="To">
 
@@ -53,9 +54,7 @@
 
                 <button type="submit"
                         class="btn btn-primary w-100">
-
                     Search
-
                 </button>
 
             </div>
@@ -65,77 +64,149 @@
     </form>
 
 </div>
-<div id="flights"></div>
 
-<div class="row">
+<!-- FLIGHTS SECTION -->
 
-    {% for flight in flights %}
+<div id="flights" class="container mt-5">
 
-    <div class="col-md-4 mb-4">
+    <div class="row">
 
-        <div class="card shadow-lg border-0 h-100">
+        {% for flight in flights %}
 
-            <div class="card-body">
+        <div class="col-md-4 mb-4">
 
-                <h4 class="card-title text-primary">
-                    {{ flight.flight_number }}
-                </h4>
+            <div class="card shadow-lg border-0 h-100">
 
-                <hr>
+                <div class="card-body">
 
-                <p class="card-text">
+                    <h4 class="card-title text-primary">
+                        {{ flight.flight_number }}
+                    </h4>
 
-                    <strong>From:</strong>
-                    {{ flight.origin }}
+                    <hr>
 
-                    <br><br>
+                    <p class="card-text">
 
-                    <strong>To:</strong>
-                    {{ flight.destination }}
+                        <strong>From:</strong>
+                        {{ flight.origin }}
 
-                    <br><br>
+                        <br><br>
 
-                    <strong>Departure:</strong>
-                    {{ flight.departure_time|date:"M d, Y H:i" }}
+                        <strong>To:</strong>
+                        {{ flight.destination }}
 
-                    <br><br>
+                        <br><br>
 
-                    <strong>Arrival:</strong>
-                    {{ flight.arrival_time|date:"M d, Y H:i" }}
+                        <strong>Departure:</strong>
+                        {{ flight.departure_time|date:"M d, Y H:i" }}
 
-                    <br><br>
+                        <br><br>
 
-                    <strong>Available Seats:</strong>
-                      {{ flight.available_seats }}
+                        <strong>Arrival:</strong>
+                        {{ flight.arrival_time|date:"M d, Y H:i" }}
+
+                        <br><br>
+
+                        <strong>Available Seats:</strong>
+                        {{ flight.available_seats }}
 
                         <br><br>
 
                         <strong>Price:</strong>
                         ₹{{ flight.price }}
 
-                </p>
+                    </p>
 
-                <a href="{% url 'flight_detail' flight.id %}"
-                   class="btn btn-primary w-100">
+                    <a href="{% url 'flight_detail' flight.id %}"
+                       class="btn btn-primary w-100">
+                        View Details
+                    </a>
 
-                    View Details
-
-                </a>
+                </div>
 
             </div>
 
         </div>
 
+        {% empty %}
+
+        <div class="text-center">
+            <h4>No flights available.</h4>
+        </div>
+
+        {% endfor %}
+
     </div>
-
-    {% empty %}
-
-    <div class="text-center">
-        <h4>No flights available.</h4>
-    </div>
-
-    {% endfor %}
 
 </div>
+
+<!-- STYLES -->
+
+<style>
+
+/* HERO SECTION */
+
+.hero-section{
+
+    height: {% if request.GET.source %} 55vh {% else %} 65vh {% endif %};
+
+    padding: 40px 20px;
+
+    background: 
+        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)),
+        url("{% static 'images/airplane-flying-9.jpg' %}");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+    transition: 0.5s ease;
+}
+
+/* TEXT VISIBILITY */
+
+.hero-section h1{
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+    font-size: 60px;
+}
+
+.hero-section p{
+    text-shadow: 1px 1px 8px rgba(0,0,0,0.8);
+    font-size: 22px;
+}
+
+/* SEARCH BOX */
+
+.search-box{
+    margin-top: -50px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(15px);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.3);
+}
+
+/* INPUT DESIGN */
+
+.search-box input{
+    height: 50px;
+    border-radius: 10px;
+}
+
+/* BUTTON */
+
+.search-box button{
+    height: 50px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+</style>
 
 {% endblock %}

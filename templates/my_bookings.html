@@ -4,7 +4,9 @@
 
 <div class="container">
 
-    <h1 class="text-center mb-5 fw-bold">
+    <!-- TITLE -->
+
+    <h1 class="text-center mb-5 fw-bold booking-title">
         ✈ My Bookings
     </h1>
 
@@ -14,7 +16,7 @@
 
         <div class="col-md-6 mb-4">
 
-            <div class="card shadow-lg border-0 text-dark h-100">
+            <div class="card shadow-lg border-0 text-dark h-100 booking-card">
 
                 <div class="card-body">
 
@@ -25,59 +27,61 @@
                     <hr>
 
                     <p>
-
                         <strong>Route:</strong>
-
-                        {{ booking.flight.origin }}
-                        →
-                        {{ booking.flight.destination }}
-
+                        {{ booking.flight.origin }} → {{ booking.flight.destination }}
                     </p>
 
                     <p>
-
                         <strong>Departure:</strong>
-
                         {{ booking.flight.departure_time|date:"M d, Y H:i" }}
-
                     </p>
 
                     <p>
-
                         <strong>Arrival:</strong>
-
                         {{ booking.flight.arrival_time|date:"M d, Y H:i" }}
+                    </p>
+
+                    <p>
+                        <strong>Seats Booked:</strong>
+                        {{ booking.seats_booked }}
+
+                        <br><br>
+
+                        <strong>Total Price:</strong>
+
+                        ₹{{ booking.seats_booked }}
+                        ×
+                        ₹{{ booking.flight.price }}
+
+                        =
+
+                        <span class="fw-bold text-success">
+                            ₹{% widthratio booking.flight.price 1 booking.seats_booked %}
+                        </span>
 
                     </p>
 
                     <p>
-
-                        Seats: {{ booking.seats_booked }}
-
-                    <br><br>
-
-                        Total Price:
-                        ₹{{ booking.total_price }}
-                    </p>
-
-                    <p>
-
                         <strong>Passenger:</strong>
-
                         {{ booking.user.username }}
-
-                    </p>
                     </p>
 
                     <p>
-                    <strong>Seat Number:</strong>
-
-                    {{ booking.seat_number }}
+                        <strong>Seat Numbers:</strong>
+                        {{ booking.seat_number }}
                     </p>
 
                     <div class="alert alert-success mt-3">
 
                         ✅ Booking Confirmed
+
+                        <a href="{% url 'download_ticket' booking.id %}"
+                           target="_blank"
+                           class="btn btn-warning mt-2 w-100 fw-bold">
+
+                           Download Ticket 🎫
+
+                        </a>
 
                     </div>
 
@@ -91,7 +95,9 @@
 
         <div class="text-center">
 
-            <h4>No bookings found.</h4>
+            <h4 class="text-dark fw-bold">
+                No bookings found.
+            </h4>
 
         </div>
 
@@ -100,5 +106,44 @@
     </div>
 
 </div>
+
+<!-- STYLES -->
+
+<style>
+
+/* TITLE FIX */
+
+.booking-title{
+    color: #0077cc !important;
+    font-size: 48px;
+    text-shadow: none !important;
+    letter-spacing: 1px;
+}
+
+/* CARD HOVER EFFECT */
+
+.booking-card{
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.booking-card:hover{
+    transform: translateY(-5px);
+}
+
+/* CARD TEXT */
+
+.card-body p{
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+/* BUTTON */
+
+.btn-warning{
+    border-radius: 10px;
+}
+
+</style>
 
 {% endblock %}

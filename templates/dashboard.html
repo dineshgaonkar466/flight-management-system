@@ -4,107 +4,152 @@
 
 <div class="container">
 
-    <h1 class="mb-5 fw-bold text-center">
-        ✈ Flight Dashboard
-    </h1>
+```
+<h1 class="mb-5 fw-bold text-center dashboard-title">
+    ✈ Flight Dashboard
+</h1>
 
-    <!-- Statistics Cards -->
+<!-- Statistics Cards -->
+<div class="row mb-5">
 
-    <div class="row mb-5">
+    <div class="col-md-6 mb-4">
 
-        <div class="col-md-6 mb-4">
+        <div class="card stats-card shadow-lg border-0 p-4">
 
-            <div class="card bg-dark text-white shadow-lg border-0 p-4">
+            <h4>Total Flights</h4>
 
-                <h3>Total Flights</h3>
-
-                <h1 class="display-4 fw-bold text-info">
-                    {{ total_flights }}
-                </h1>
-
-            </div>
-
-        </div>
-
-        <div class="col-md-6 mb-4">
-
-            <div class="card bg-dark text-white shadow-lg border-0 p-4">
-
-                <h3>Total Available Seats</h3>
-
-                <h1 class="display-4 fw-bold text-success">
-                    {{ total_available_seats }}
-                </h1>
-
-            </div>
+            <h1 class="display-4 fw-bold text-info">
+                {{ total_flights }}
+            </h1>
 
         </div>
 
     </div>
 
-    <!-- Flights Table -->
+    <div class="col-md-6 mb-4">
 
-    <div class="card shadow-lg border-0">
+        <div class="card stats-card shadow-lg border-0 p-4">
 
-        <div class="card-body">
+            <h4>Total Available Seats</h4>
 
-            <h3 class="mb-4 text-dark">
-                Available Flights
-            </h3>
-
-            <div class="table-responsive">
-
-                <table class="table table-hover align-middle">
-
-                    <thead class="table-dark">
-
-                        <tr>
-                            <th>Flight</th>
-                            <th>Origin</th>
-                            <th>Destination</th>
-                            <th>Seats</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        {% for flight in flights %}
-
-                        <tr>
-
-                            <td>
-                                <strong>
-                                    {{ flight.flight_number }}
-                                </strong>
-                            </td>
-
-                            <td>
-                                {{ flight.origin }}
-                            </td>
-
-                            <td>
-                                {{ flight.destination }}
-                            </td>
-
-                            <td>
-                                {{ flight.available_seats }}
-                            </td>
-
-                        </tr>
-
-                        {% endfor %}
-
-                    </tbody>
-
-                </table>
-
-            </div>
+            <h1 class="display-4 fw-bold text-success">
+                {{ total_available_seats }}
+            </h1>
 
         </div>
 
     </div>
 
 </div>
+
+<!-- Flights Table -->
+<div class="card table-card shadow-lg border-0">
+
+    <div class="card-body">
+
+        <h3 class="mb-4 table-title">
+            Available Flights
+        </h3>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-dark">
+
+                    <tr>
+                        <th>Flight</th>
+                        <th>Origin</th>
+                        <th>Destination</th>
+                        <th>Seats</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for flight in flights %}
+
+                    <tr>
+
+                        <td>
+                            <strong>{{ flight.flight_number }}</strong>
+                        </td>
+
+                        <td>{{ flight.origin }}</td>
+
+                        <td>{{ flight.destination }}</td>
+
+                        <td>{{ flight.available_seats }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<!-- STYLES -->
+
+<style>
+
+/* Background */
+body{
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    color: white;
+}
+
+/* Title */
+.dashboard-title{
+    color: #00d4ff;
+    text-shadow: 0px 0px 12px rgba(0, 212, 255, 0.7);
+}
+
+/* Cards */
+.stats-card{
+    background: #1e1e2f;
+    color: white;
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.stats-card:hover{
+    transform: scale(1.03);
+}
+
+/* Table Card */
+.table-card{
+    background: white;
+    border-radius: 15px;
+}
+
+/* Table Title */
+.table-title{
+    color: #222;
+    font-weight: bold;
+}
+
+/* Table Header */
+.table th{
+    background-color: #222;
+    color: white;
+}
+
+/* Table Rows */
+.table td{
+    color: black;
+}
+
+</style>
 
 {% endblock %}

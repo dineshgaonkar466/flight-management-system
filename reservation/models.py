@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Flight(models.Model):
     flight_number = models.CharField(max_length=10)
     origin = models.CharField(max_length=100)
@@ -12,7 +13,6 @@ class Flight(models.Model):
     price = models.IntegerField(default=5000)
 
     def save(self, *args, **kwargs):
-        # Only set available_seats on creation (not on every update)
         if not self.pk or self.available_seats is None:
             self.available_seats = self.total_seats
         super().save(*args, **kwargs)
@@ -20,11 +20,23 @@ class Flight(models.Model):
     def __str__(self):
         return f"{self.flight_number}: {self.origin} → {self.destination}"
 
+
+# ✅ MOVE THIS OUTSIDE (IMPORTANT)
+class Seat(models.Model):
+    flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
+    seat_number = models.CharField(max_length=5)
+    seat_type = models.CharField(max_length=10)  # Window, Middle, Aisle
+    is_booked = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.flight.flight_number} - {self.seat_number}"
+
+
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
-    seats_booked = models.PositiveIntegerField(default=1)  # ✅ Add this field
-    seat_number = models.CharField(max_length=10)
+    seats_booked = models.PositiveIntegerField(default=1)
+    seat_number = models.CharField(max_length=100)  # ✅ increase size
     booking_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

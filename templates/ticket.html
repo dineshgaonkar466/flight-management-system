@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background: #ffffff;
+    padding: 5px;
+    margin: 0;
+}
+
+.ticket-container{
+
+    width: 680px;
+
+    margin: auto;
+
+    background: white;
+
+    border: 2px solid #0077cc;
+
+    border-radius: 15px;
+
+    overflow: hidden;
+}
+
+.top-bar{
+
+    background: linear-gradient(
+        135deg,
+        #0077cc,
+        #00bfff
+    );
+
+    color: white;
+
+    text-align: center;
+
+    padding: 10px;
+}
+
+.top-bar h1{
+
+    margin: 0;
+
+    font-size: 20px;
+}
+
+.ticket-body{
+
+    width: 100%;
+}
+
+.route{
+
+    text-align: center;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    color: #0077cc;
+
+    padding: 12px;
+
+    border-bottom: 1px solid #ddd;
+}
+
+.info-table{
+
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+.info-table td{
+
+    border: 1px solid #dbe8f5;
+
+    padding: 10px;
+
+    font-size: 14px;
+}
+
+.label{
+
+    background: #f4f9ff;
+
+    font-weight: bold;
+
+    width: 35%;
+}
+
+.value{
+
+    background: white;
+}
+
+.price-box{
+
+    margin: 15px;
+
+    text-align: center;
+
+    background: #28a745;
+
+    color: white;
+
+    padding: 10px;
+
+    border-radius: 8px;
+
+    font-size: 22px;
+
+    font-weight: bold;
+}
+
+.footer{
+
+    background: #f8fbff;
+
+    padding: 10px;
+
+    text-align: center;
+
+    border-top: 1px solid #ddd;
+}
+
+.confirmed{
+
+    background: #28a745;
+
+    color: white;
+
+    padding: 8px;
+
+    border-radius: 6px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    display: inline-block;
+}
+
+.barcode{
+
+    margin-top: 10px;
+
+    font-size: 18px;
+
+    letter-spacing: 3px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="ticket-container">
+
+    <!-- HEADER -->
+
+    <div class="top-bar">
+
+        <h1>
+            ✈ AIRLINES BOARDING PASS
+        </h1>
+
+    </div>
+
+    <!-- ROUTE -->
+
+    <div class="route">
+
+        {{ booking.flight.origin }}
+        ✈
+        {{ booking.flight.destination }}
+
+    </div>
+
+    <!-- DETAILS -->
+
+    <table class="info-table">
+
+        <tr>
+            <td class="label">Passenger</td>
+
+            <td class="value">
+                {{ booking.user.username }}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="label">Flight Number</td>
+
+            <td class="value">
+                {{ booking.flight.flight_number }}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="label">Departure Date</td>
+
+            <td class="value">
+                {{ booking.flight.departure_time|date:"d M Y" }}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="label">Departure Time</td>
+
+            <td class="value">
+                {{ booking.flight.departure_time|date:"H:i" }}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="label">Seat Numbers</td>
+
+            <td class="value">
+                {{ booking.seat_number }}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="label">Total Seats</td>
+
+            <td class="value">
+                {{ booking.seats_booked }}
+            </td>
+        </tr>
+
+    </table>
+
+    <!-- PRICE -->
+
+    <div class="price-box">
+
+        ₹{% widthratio booking.flight.price 1 booking.seats_booked %}
+
+    </div>
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        <div class="confirmed">
+
+            ✔ BOOKING CONFIRMED
+
+        </div>
+
+        <div class="barcode">
+
+            ||||||||||||||||
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
