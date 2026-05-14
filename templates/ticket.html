@@ -2,33 +2,38 @@
 <html>
 
 <head>
+
 <meta charset="UTF-8">
 
 <style>
 
 body{
     font-family: Arial, sans-serif;
-    background: #ffffff;
-    padding: 5px;
+    background: #f4f6f9;
     margin: 0;
+    padding: 10px;
 }
 
-.ticket-container{
+/* MAIN TICKET */
 
-    width: 680px;
+.ticket{
+
+    width: 700px;
 
     margin: auto;
 
-    background: white;
-
     border: 2px solid #0077cc;
 
-    border-radius: 15px;
+    border-radius: 18px;
 
     overflow: hidden;
+
+    background: white;
 }
 
-.top-bar{
+/* HEADER */
+
+.header{
 
     background: linear-gradient(
         135deg,
@@ -38,37 +43,45 @@ body{
 
     color: white;
 
-    text-align: center;
+    padding: 15px;
 
-    padding: 10px;
+    text-align: center;
 }
 
-.top-bar h1{
+.header h1{
 
     margin: 0;
 
-    font-size: 20px;
+    font-size: 24px;
 }
 
-.ticket-body{
-
-    width: 100%;
-}
+/* ROUTE */
 
 .route{
 
     text-align: center;
 
-    font-size: 24px;
+    font-size: 28px;
 
     font-weight: bold;
 
     color: #0077cc;
 
-    padding: 12px;
+    padding: 18px;
 
-    border-bottom: 1px solid #ddd;
+    background: #f8fbff;
+
+    border-bottom: 2px dashed #cfdff5;
 }
+
+/* CONTENT */
+
+.content{
+
+    padding: 18px;
+}
+
+/* TABLE */
 
 .info-table{
 
@@ -88,72 +101,136 @@ body{
 
 .label{
 
+    width: 35%;
+
     background: #f4f9ff;
 
     font-weight: bold;
-
-    width: 35%;
 }
 
 .value{
 
-    background: white;
+    font-weight: bold;
 }
+
+/* PRICE */
 
 .price-box{
 
-    margin: 15px;
-
-    text-align: center;
+    margin-top: 15px;
 
     background: #28a745;
 
     color: white;
+
+    text-align: center;
+
+    padding: 12px;
+
+    border-radius: 8px;
+}
+
+.price-title{
+
+    font-size: 13px;
+}
+
+.price{
+
+    font-size: 28px;
+
+    font-weight: bold;
+}
+
+/* STATUS */
+
+.status{
+
+    margin-top: 12px;
+
+    background: #0077cc;
+
+    color: white;
+
+    text-align: center;
 
     padding: 10px;
 
     border-radius: 8px;
 
-    font-size: 22px;
-
-    font-weight: bold;
-}
-
-.footer{
-
-    background: #f8fbff;
-
-    padding: 10px;
-
-    text-align: center;
-
-    border-top: 1px solid #ddd;
-}
-
-.confirmed{
-
-    background: #28a745;
-
-    color: white;
-
-    padding: 8px;
-
-    border-radius: 6px;
-
     font-size: 14px;
 
     font-weight: bold;
-
-    display: inline-block;
 }
 
-.barcode{
+/* EXTRA INFO */
 
-    margin-top: 10px;
+.extra{
+
+    margin-top: 18px;
+
+    border: 1px dashed #0077cc;
+
+    border-radius: 10px;
+
+    padding: 12px;
+
+    background: #f8fbff;
+}
+
+.extra-table{
+
+    width: 100%;
+}
+
+.extra-title{
+
+    font-size: 11px;
+
+    color: #666;
+}
+
+.extra-value{
 
     font-size: 18px;
 
-    letter-spacing: 3px;
+    font-weight: bold;
+
+    color: #222;
+}
+
+/* BARCODE */
+
+.barcode{
+
+    margin-top: 18px;
+
+    text-align: center;
+
+    font-size: 26px;
+
+    letter-spacing: 4px;
+
+    font-weight: bold;
+
+    color: #333;
+}
+
+/* FOOTER */
+
+.footer{
+
+    text-align: center;
+
+    padding: 12px;
+
+    font-size: 12px;
+
+    color: #666;
+
+    border-top: 1px solid #ddd;
+
+    margin-top: 15px;
 }
 
 </style>
@@ -162,11 +239,11 @@ body{
 
 <body>
 
-<div class="ticket-container">
+<div class="ticket">
 
     <!-- HEADER -->
 
-    <div class="top-bar">
+    <div class="header">
 
         <h1>
             ✈ AIRLINES BOARDING PASS
@@ -179,86 +256,168 @@ body{
     <div class="route">
 
         {{ booking.flight.origin }}
+
         ✈
+
         {{ booking.flight.destination }}
 
     </div>
 
-    <!-- DETAILS -->
+    <!-- CONTENT -->
 
-    <table class="info-table">
+    <div class="content">
 
-        <tr>
-            <td class="label">Passenger</td>
+        <table class="info-table">
 
-            <td class="value">
-                {{ booking.user.username }}
-            </td>
-        </tr>
+            <tr>
+                <td class="label">Passenger</td>
 
-        <tr>
-            <td class="label">Flight Number</td>
+                <td class="value">
+                    {{ booking.user.username }}
+                </td>
+            </tr>
 
-            <td class="value">
-                {{ booking.flight.flight_number }}
-            </td>
-        </tr>
+            <tr>
+                <td class="label">Flight Number</td>
 
-        <tr>
-            <td class="label">Departure Date</td>
+                <td class="value">
+                    {{ booking.flight.flight_number }}
+                </td>
+            </tr>
 
-            <td class="value">
-                {{ booking.flight.departure_time|date:"d M Y" }}
-            </td>
-        </tr>
+            <tr>
+                <td class="label">Departure Date</td>
 
-        <tr>
-            <td class="label">Departure Time</td>
+                <td class="value">
+                    {{ booking.flight.departure_time|date:"d M Y" }}
+                </td>
+            </tr>
 
-            <td class="value">
-                {{ booking.flight.departure_time|date:"H:i" }}
-            </td>
-        </tr>
+            <tr>
+                <td class="label">Departure Time</td>
 
-        <tr>
-            <td class="label">Seat Numbers</td>
+                <td class="value">
+                    {{ booking.flight.departure_time|date:"H:i" }}
+                </td>
+            </tr>
 
-            <td class="value">
-                {{ booking.seat_number }}
-            </td>
-        </tr>
+            <tr>
+                <td class="label">Seat Numbers</td>
 
-        <tr>
-            <td class="label">Total Seats</td>
+                <td class="value">
+                    {{ booking.seat_number }}
+                </td>
+            </tr>
 
-            <td class="value">
-                {{ booking.seats_booked }}
-            </td>
-        </tr>
+            <tr>
+                <td class="label">Total Seats</td>
 
-    </table>
+                <td class="value">
+                    {{ booking.seats_booked }}
+                </td>
+            </tr>
 
-    <!-- PRICE -->
+        </table>
 
-    <div class="price-box">
+        <!-- PRICE -->
 
-        ₹{% widthratio booking.flight.price 1 booking.seats_booked %}
+        <div class="price-box">
 
-    </div>
+            <div class="price-title">
 
-    <!-- FOOTER -->
+                TOTAL PRICE
 
-    <div class="footer">
+            </div>
 
-        <div class="confirmed">
+            <div class="price">
+
+                ₹{{ booking.total_price }}
+
+            </div>
+
+        </div>
+
+        <!-- STATUS -->
+
+        <div class="status">
 
             ✔ BOOKING CONFIRMED
 
         </div>
 
-        <div class="barcode">
+        <!-- EXTRA DETAILS -->
 
-            ||||||||||||||||
+        <div class="extra">
+
+            <table class="extra-table">
+
+                <tr>
+
+                    <td>
+
+                        <div class="extra-title">
+                            FROM
+                        </div>
+
+                        <div class="extra-value">
+                            {{ booking.flight.origin }}
+                        </div>
+
+                    </td>
+
+                    <td>
+
+                        <div class="extra-title">
+                            TO
+                        </div>
+
+                        <div class="extra-value">
+                            {{ booking.flight.destination }}
+                        </div>
+
+                    </td>
+
+                    <td>
+
+                        <div class="extra-title">
+                            FLIGHT
+                        </div>
+
+                        <div class="extra-value">
+                            {{ booking.flight.flight_number }}
+                        </div>
+
+                    </td>
+
+                    <td>
+
+                        <div class="extra-title">
+                            SEATS
+                        </div>
+
+                        <div class="extra-value">
+                            {{ booking.seat_number }}
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+            <div class="barcode">
+
+                ||||||||||||||||
+
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+
+        <div class="footer">
+
+            Thank you for choosing FlightBooking ✈
 
         </div>
 

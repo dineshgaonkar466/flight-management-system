@@ -1,31 +1,283 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h2>Book Flight: {{ flight.flight_number }}</h2>
 
-<div id="alertBox"></div>
+<div class="container py-5">
 
-<form method="post" onsubmit="return validateBookingForm();">
-    {% csrf_token %}
-    <div class="form-group mb-3">
-        <label for="id_seats">Number of Seats</label>
-        <input type="number" name="seats" id="id_seats" class="form-control" min="1" max="{{ flight.available_seats }}" required>
+    <div class="row justify-content-center">
+
+        <div class="col-lg-10">
+
+            <div class="card border-0 shadow-lg booking-card overflow-hidden">
+
+                <div class="row g-0">
+
+                    <!-- LEFT IMAGE -->
+
+                    <div class="col-md-5">
+
+                        <div class="booking-image">
+
+                            <div class="overlay-content">
+
+                                <h1 class="fw-bold">
+                                    ✈ Book Flight
+                                </h1>
+
+                                <p class="mt-3">
+                                    Safe • Fast • Premium Experience
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT CONTENT -->
+
+                    <div class="col-md-7">
+
+                        <div class="p-5">
+
+                            <h1 class="fw-bold text-primary">
+
+                                {{ flight.flight_number }}
+
+                            </h1>
+
+                            <p class="text-muted mb-4">
+
+                                Complete your reservation
+
+                            </p>
+
+                            <!-- ROUTE -->
+
+                            <div class="route-box mb-4">
+
+                                <div class="d-flex justify-content-between align-items-center">
+
+                                    <div>
+
+                                        <h4 class="fw-bold">
+                                            {{ flight.origin }}
+                                        </h4>
+
+                                        <small class="text-muted">
+                                            Departure
+                                        </small>
+
+                                    </div>
+
+                                    <div class="plane-icon">
+
+                                        ✈
+
+                                    </div>
+
+                                    <div class="text-end">
+
+                                        <h4 class="fw-bold">
+                                            {{ flight.destination }}
+                                        </h4>
+
+                                        <small class="text-muted">
+                                            Arrival
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- DETAILS -->
+
+                            <div class="info-box mb-4">
+
+                                <p>
+
+                                    <strong>Departure:</strong>
+
+                                    {{ flight.departure_time }}
+
+                                </p>
+
+                                <p>
+
+                                    <strong>Arrival:</strong>
+
+                                    {{ flight.arrival_time }}
+
+                                </p>
+
+                                <p class="mb-0">
+
+                                    <strong>Seats Available:</strong>
+
+                                    {{ flight.available_seats }}
+
+                                </p>
+
+                            </div>
+
+                            <!-- FORM -->
+
+                            <form method="POST">
+
+                                {% csrf_token %}
+
+                                <div class="mb-4">
+
+                                    <label class="form-label fw-bold">
+
+                                        Number of Seats
+
+                                    </label>
+
+                                    <input type="number"
+                                           name="seats"
+                                           min="1"
+                                           max="{{ flight.available_seats }}"
+                                           class="form-control seat-input"
+                                           placeholder="Enter number of seats"
+                                           required>
+
+                                </div>
+
+                                <button type="submit"
+                                        class="btn btn-primary btn-lg w-100 fw-bold confirm-btn">
+
+                                    Confirm Booking ✈
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
-    <button type="submit" class="btn btn-primary">Confirm Booking</button>
-</form>
 
-<script>
-function validateBookingForm() {
-    const seats = parseInt(document.getElementById("id_seats").value);
-    const maxSeats = {{ flight.available_seats }};
-    if (seats <= 0 || seats > maxSeats) {
-        document.getElementById("alertBox").innerHTML = `
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                Please enter a valid number of seats (1 to ${maxSeats}).
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>`;
-        return false;
-    }
-    return true;
+</div>
+
+<style>
+
+.booking-card{
+
+    border-radius: 25px;
+
+    background: white;
 }
-</script>
+
+.booking-image{
+
+    height: 100%;
+
+    min-height: 600px;
+
+    background:
+        linear-gradient(rgba(0,0,0,0.45),
+        rgba(0,0,0,0.6)),
+        url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1200');
+
+    background-size: cover;
+
+    background-position: center;
+
+    position: relative;
+}
+
+.overlay-content{
+
+    position: absolute;
+
+    bottom: 40px;
+
+    left: 30px;
+
+    color: white;
+}
+
+.overlay-content h1{
+
+    font-size: 42px;
+}
+
+.route-box{
+
+    background: #f8fbff;
+
+    padding: 25px;
+
+    border-radius: 20px;
+}
+
+.plane-icon{
+
+    font-size: 35px;
+
+    color: #0077ff;
+}
+
+.info-box{
+
+    background: #f8fbff;
+
+    padding: 20px;
+
+    border-radius: 15px;
+}
+
+.seat-input{
+
+    height: 55px;
+
+    border-radius: 12px;
+
+    font-size: 18px;
+}
+
+.confirm-btn{
+
+    padding: 14px;
+
+    border-radius: 14px;
+
+    background: linear-gradient(to right,#0077ff,#00bfff);
+
+    border: none;
+
+    transition: 0.3s;
+}
+
+.confirm-btn:hover{
+
+    transform: scale(1.02);
+
+    box-shadow: 0 10px 20px rgba(0,119,255,0.3);
+}
+
+@media(max-width:768px){
+
+    .booking-image{
+        min-height: 300px;
+    }
+
+    .overlay-content h1{
+        font-size: 28px;
+    }
+
+}
+
+</style>
+
 {% endblock %}

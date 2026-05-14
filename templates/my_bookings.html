@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container py-5">
 
     <!-- TITLE -->
 
@@ -14,72 +14,180 @@
 
         {% for booking in bookings %}
 
-        <div class="col-md-6 mb-4">
+        <div class="col-lg-6 mb-4">
 
-            <div class="card shadow-lg border-0 text-dark h-100 booking-card">
+            <div class="card border-0 shadow-lg booking-card h-100 overflow-hidden">
 
-                <div class="card-body">
+                <!-- TOP HEADER -->
 
-                    <h3 class="text-primary fw-bold">
-                        {{ booking.flight.flight_number }}
-                    </h3>
+                <div class="ticket-header">
 
-                    <hr>
+                    <div>
 
-                    <p>
-                        <strong>Route:</strong>
-                        {{ booking.flight.origin }} → {{ booking.flight.destination }}
-                    </p>
+                        <h2 class="fw-bold mb-0">
+                            {{ booking.flight.flight_number }}
+                        </h2>
 
-                    <p>
-                        <strong>Departure:</strong>
-                        {{ booking.flight.departure_time|date:"M d, Y H:i" }}
-                    </p>
+                        <small>
+                            Premium Airline Ticket
+                        </small>
 
-                    <p>
-                        <strong>Arrival:</strong>
-                        {{ booking.flight.arrival_time|date:"M d, Y H:i" }}
-                    </p>
+                    </div>
 
-                    <p>
-                        <strong>Seats Booked:</strong>
-                        {{ booking.seats_booked }}
+                    <div class="price-tag">
 
-                        <br><br>
+                        ₹{% widthratio booking.flight.price 1 booking.seats_booked %}
 
-                        <strong>Total Price:</strong>
+                    </div>
 
-                        ₹{{ booking.seats_booked }}
-                        ×
-                        ₹{{ booking.flight.price }}
+                </div>
 
-                        =
+                <!-- CARD BODY -->
 
-                        <span class="fw-bold text-success">
-                            ₹{% widthratio booking.flight.price 1 booking.seats_booked %}
-                        </span>
+                <div class="card-body p-4">
 
-                    </p>
+                    <!-- ROUTE -->
 
-                    <p>
-                        <strong>Passenger:</strong>
-                        {{ booking.user.username }}
-                    </p>
+                    <div class="route-section text-center mb-4">
 
-                    <p>
-                        <strong>Seat Numbers:</strong>
-                        {{ booking.seat_number }}
-                    </p>
+                        <h3 class="fw-bold">
 
-                    <div class="alert alert-success mt-3">
+                            {{ booking.flight.origin }}
+
+                            <span class="mx-3 text-primary">
+                                ✈
+                            </span>
+
+                            {{ booking.flight.destination }}
+
+                        </h3>
+
+                    </div>
+
+                    <!-- DETAILS -->
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+
+                            <div class="detail-box">
+
+                                <h6>Departure</h6>
+
+                                <p>
+                                    {{ booking.flight.departure_time|date:"M d, Y H:i" }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <div class="detail-box">
+
+                                <h6>Arrival</h6>
+
+                                <p>
+                                    {{ booking.flight.arrival_time|date:"M d, Y H:i" }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <div class="detail-box">
+
+                                <h6>Passenger</h6>
+
+                                <p>
+                                    {{ booking.user.username }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <div class="detail-box">
+
+                                <h6>Seats Booked</h6>
+
+                                <p>
+                                    {{ booking.seats_booked }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+
+                            <div class="detail-box">
+
+                                <h6>Seat Numbers</h6>
+
+                                <p>
+                                    {{ booking.seat_number }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- PRICE -->
+
+                    <div class="price-section">
+
+                        <h5>
+
+                            ₹{{ booking.seats_booked }}
+
+                            ×
+
+                            ₹{{ booking.flight.price }}
+
+                            =
+
+                            <span class="text-success fw-bold">
+
+                                ₹{% widthratio booking.flight.price 1 booking.seats_booked %}
+
+                            </span>
+
+                        </h5>
+
+                    </div>
+
+                    <!-- STATUS -->
+
+                    <div class="alert alert-success mt-4 border-0">
 
                         ✅ Booking Confirmed
 
+                    </div>
+
+                    <!-- BUTTONS -->
+
+                    <div class="d-grid gap-2">
+
                         <a href="{% url 'download_ticket' booking.id %}"
                            target="_blank"
-                           class="btn btn-warning mt-2 w-100 fw-bold">
+                           class="btn btn-warning fw-bold download-btn">
 
-                           Download Ticket 🎫
+                            Download Ticket 🎫
+
+                        </a>
+
+                        <a href="{% url 'delete_booking' booking.id %}"
+                           class="btn btn-danger fw-bold">
+
+                            Cancel Booking ❌
 
                         </a>
 
@@ -93,11 +201,11 @@
 
         {% empty %}
 
-        <div class="text-center">
+        <div class="text-center mt-5">
 
-            <h4 class="text-dark fw-bold">
+            <h3 class="fw-bold text-muted">
                 No bookings found.
-            </h4>
+            </h3>
 
         </div>
 
@@ -107,41 +215,151 @@
 
 </div>
 
-<!-- STYLES -->
-
 <style>
 
-/* TITLE FIX */
+/* TITLE */
 
 .booking-title{
-    color: #0077cc !important;
-    font-size: 48px;
-    text-shadow: none !important;
+
+    color: #0077cc;
+
+    font-size: 52px;
+
     letter-spacing: 1px;
 }
 
-/* CARD HOVER EFFECT */
+/* CARD */
 
 .booking-card{
-    border-radius: 15px;
+
+    border-radius: 25px;
+
     transition: 0.3s;
+
+    background: white;
 }
 
 .booking-card:hover{
-    transform: translateY(-5px);
+
+    transform: translateY(-8px);
+
+    box-shadow: 0 15px 30px rgba(0,0,0,0.12);
 }
 
-/* CARD TEXT */
+/* HEADER */
 
-.card-body p{
-    font-size: 17px;
-    line-height: 1.8;
+.ticket-header{
+
+    background: linear-gradient(to right,#0077ff,#00bfff);
+
+    color: white;
+
+    padding: 25px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+/* PRICE TAG */
+
+.price-tag{
+
+    background: white;
+
+    color: #0077ff;
+
+    padding: 10px 18px;
+
+    border-radius: 12px;
+
+    font-weight: bold;
+
+    font-size: 20px;
+}
+
+/* ROUTE */
+
+.route-section{
+
+    background: #f8fbff;
+
+    padding: 20px;
+
+    border-radius: 15px;
+}
+
+/* DETAIL BOX */
+
+.detail-box{
+
+    background: #f8fbff;
+
+    padding: 18px;
+
+    border-radius: 15px;
+
+    height: 100%;
+}
+
+.detail-box h6{
+
+    color: #777;
+
+    margin-bottom: 10px;
+}
+
+.detail-box p{
+
+    font-weight: 600;
+
+    margin-bottom: 0;
+}
+
+/* PRICE */
+
+.price-section{
+
+    background: #eef7ff;
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+    text-align: center;
+
+    margin-top: 10px;
 }
 
 /* BUTTON */
 
-.btn-warning{
-    border-radius: 10px;
+.download-btn{
+
+    border-radius: 12px;
+
+    padding: 12px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .ticket-header{
+
+        flex-direction: column;
+
+        gap: 15px;
+
+        text-align: center;
+    }
+
+    .booking-title{
+
+        font-size: 38px;
+    }
+
 }
 
 </style>

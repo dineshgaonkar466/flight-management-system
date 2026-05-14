@@ -1,10 +1,307 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h2>Flight {{ flight.flight_number }}</h2>
-<p><strong>From:</strong> {{ flight.origin }}</p>
-<p><strong>To:</strong> {{ flight.destination }}</p>
-<p><strong>Departure:</strong> {{ flight.departure_time }}</p>
-<p><strong>Arrival:</strong> {{ flight.arrival_time }}</p>
-<p><strong>Seats Available:</strong> {{ flight.available_seats }}</p>
-<a href="{% url 'book_flight' flight.id %}" class="btn btn-success">Book Now</a>
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-10">
+
+            <div class="card border-0 shadow-lg overflow-hidden detail-card">
+
+                <div class="row g-0">
+
+                    <!-- LEFT IMAGE -->
+
+                    <div class="col-md-5">
+
+                        <div class="flight-image">
+
+                            <div class="overlay-content">
+
+                                <h1 class="fw-bold">
+                                    ✈ Fly Premium
+                                </h1>
+
+                                <p class="mt-3">
+                                    Comfortable and secure airline booking
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT SIDE -->
+
+                    <div class="col-md-7">
+
+                        <div class="p-5">
+
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                <div>
+
+                                    <h1 class="fw-bold text-primary">
+                                        {{ flight.flight_number }}
+                                    </h1>
+
+                                    <p class="text-muted">
+                                        Premium Airline Service
+                                    </p>
+
+                                </div>
+
+                                <div class="price-tag">
+
+                                    ₹{{ flight.price }}
+
+                                </div>
+
+                            </div>
+
+                            <!-- ROUTE -->
+
+                            <div class="route-box mt-4">
+
+                                <div class="d-flex justify-content-between align-items-center">
+
+                                    <div>
+
+                                        <h4 class="fw-bold">
+                                            {{ flight.origin }}
+                                        </h4>
+
+                                        <small class="text-muted">
+                                            Departure
+                                        </small>
+
+                                    </div>
+
+                                    <div class="plane-icon">
+
+                                        ✈
+
+                                    </div>
+
+                                    <div class="text-end">
+
+                                        <h4 class="fw-bold">
+                                            {{ flight.destination }}
+                                        </h4>
+
+                                        <small class="text-muted">
+                                            Arrival
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- DETAILS -->
+
+                            <div class="row mt-4">
+
+                                <div class="col-md-6 mb-3">
+
+                                    <div class="info-box">
+
+                                        <h6>Departure Time</h6>
+
+                                        <p>
+                                            {{ flight.departure_time }}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <div class="info-box">
+
+                                        <h6>Arrival Time</h6>
+
+                                        <p>
+                                            {{ flight.arrival_time }}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+
+                                    <div class="info-box">
+
+                                        <h6>Seats Available</h6>
+
+                                        <p>
+                                            {{ flight.available_seats }}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- BUTTON -->
+
+                            <a href="{% url 'book_flight' flight.id %}"
+                               class="btn btn-primary btn-lg w-100 mt-3 fw-bold book-btn">
+
+                                Book Now ✈
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+.detail-card{
+
+    border-radius: 25px;
+
+    overflow: hidden;
+
+    background: white;
+}
+
+.flight-image{
+
+    height: 100%;
+
+    min-height: 600px;
+
+    background:
+        linear-gradient(rgba(0,0,0,0.45),
+        rgba(0,0,0,0.6)),
+        url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1200');
+
+    background-size: cover;
+
+    background-position: center;
+
+    position: relative;
+}
+
+.overlay-content{
+
+    position: absolute;
+
+    bottom: 40px;
+
+    left: 30px;
+
+    color: white;
+}
+
+.overlay-content h1{
+
+    font-size: 42px;
+}
+
+.price-tag{
+
+    background: linear-gradient(to right,#0077ff,#00bfff);
+
+    color: white;
+
+    padding: 12px 20px;
+
+    border-radius: 15px;
+
+    font-size: 22px;
+
+    font-weight: bold;
+}
+
+.route-box{
+
+    background: #f8fbff;
+
+    padding: 25px;
+
+    border-radius: 20px;
+}
+
+.plane-icon{
+
+    font-size: 35px;
+
+    color: #0077ff;
+}
+
+.info-box{
+
+    background: #f8fbff;
+
+    padding: 20px;
+
+    border-radius: 15px;
+}
+
+.info-box h6{
+
+    color: gray;
+}
+
+.info-box p{
+
+    font-weight: 600;
+
+    margin-bottom: 0;
+}
+
+.book-btn{
+
+    padding: 14px;
+
+    border-radius: 14px;
+
+    background: linear-gradient(to right,#0077ff,#00bfff);
+
+    border: none;
+
+    transition: 0.3s;
+}
+
+.book-btn:hover{
+
+    transform: scale(1.02);
+
+    box-shadow: 0 10px 20px rgba(0,119,255,0.3);
+}
+
+@media(max-width:768px){
+
+    .flight-image{
+        min-height: 300px;
+    }
+
+    .overlay-content h1{
+        font-size: 28px;
+    }
+
+}
+
+</style>
+
 {% endblock %}
